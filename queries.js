@@ -2,17 +2,16 @@ const Pool = require('pg').Pool;
 
 const pool = new Pool(
 {
-user:'me',
-host:'localhost',
-database:'crudapi',
-password:'abc',
+user:'postgres',
+host:'192.168.2.103',
+database:'postgres',
+password:'postgres',
 port:5432
 })
-console.log("quries file");
 const getUsers = async (request,response)=>{
 try{
 	console.log("get user func");
-	const res =  await pool.query('SELECT * FROM users ORDER BY id ASC');
+	const res =  await pool.query('SELECT * FROM students ORDER BY id ASC');
 	console.log('response',res);
 	response.send(res.rows); 
 }	
@@ -25,9 +24,9 @@ catch(error){
 
 const createUser = async (request,response)=>{
 try{
-	const{name,email}=request.body;
+	const{firstName,lastName}=request.body;
 	console.log("create user func");
-	const res =  await pool.query('INSERT INTO users(name.email) VALUES ($1,$2)',[name,email]);
+	const res =  await pool.query('INSERT INTO students(firstName,lastName) VALUES ($1,$2)',[firstName,lastName]);
 	console.log('response',res);
 	response.status(200).send(res); 
 }	
@@ -41,9 +40,9 @@ const updateUser = async (request,response)=>{
 try{
 	const id = parseInt(request.params.id);
 	console.log("id to update",id);
-	const{name,email}=request.body;
+	const{firstName,lastName}=request.body;
 	console.log("create user func");
-	const res =  await pool.query('UPDATE users SET name=$1,email=$2 WHERE id=$3,[name,email,id]);
+	const res =  await pool.query('UPDATE students SET firstName=$1,lastName=$2 WHERE id=$3',[firstName,lastName,id]);
 	console.log('response',res);
 	response.status(200).send(res); 
 }	
