@@ -2,9 +2,9 @@ const Pool = require('pg').Pool;
 
 const pool = new Pool(
 {
-user:'postgres',
-host:'192.168.2.103',
-database:'postgres',
+user:'testuser',
+host:'postgres',
+database:'testdb',
 password:'postgres',
 port:5432
 })
@@ -52,8 +52,54 @@ catch(error){
 }
 };
 
+const addTeacher = async (request, response) => {
+	try {
+		const { name, course } = request.body;
+		console.log("create user func");
+		const res = await pool.query('INSERT INTO teachers(name,course) VALUES ($1,$2)', [name, course]);
+		console.log('response', res);
+		response.status(200).send(res);
+	}
+	catch (error) {
+		console.log(error);
+		response.status(400).json(error);
+	}
+};
+
+const updateTeacherDetails = async (request, response) => {
+	try {
+		const id = parseInt(request.params.id);
+		console.log("id to update", id);
+		const { name, course } = request.body;
+		console.log("create user func");
+		const res = await pool.query('UPDATE teachers SET name=$1,course=$2 WHERE id=$3', [name, course, id]);
+		console.log('response', res);
+		response.status(200).send(res);
+	}
+	catch (error) {
+		console.log(error);
+		response.status(400).json(error);
+	}
+};
+
+const getTeachers = async (request, response) => {
+	try {
+		console.log("get user func");
+		const res = await pool.query('SELECT * FROM teachers ORDER BY id ASC');
+		console.log('response', res);
+		response.send(res.rows);
+	}
+	catch (error) {
+		console.log(error);
+		response.status(400).json(error);
+	}
+};
+
 module.exports = {
 	getUsers,
 	createUser,
-	updateUser 
+	updateUser,
+	addTeacher,
+	getTeachers,
+	updateTeacherDetails
 }
