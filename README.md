@@ -1,17 +1,9 @@
-*if dont have psql docker images then open terminal and run:
-    -docker run --name postgres-docker -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
-        -postgres-docker -> container name
-        -POSTGRES_PASSWORD -> your psql password  in environement
-        -p ports
-*to run docker container on terminal:
-    -docker exec -it postgres-docker bash
+this is dockerize node app with redis and mongo You need to install docker and docker-compose to run this repo.
 
-*run this to connect psql
-    -psql -U postgres
+#Install docker first -https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04 #Install docker-compose -https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04
 
-*for basic example create table using this command
-    -CREATE TABLE public.persons (id int PRIMARY KEY, lastName varchar(255), firstName varchar(255));
-*to check all images
-    -docker images -a
-*to check your container is running or not
-    -docker ps
+How to RUN: - clone repo and run npm install - run docker-compose up -d '-d means run in detached mode (in background)'
+
+Server will be runnig on port 3000
+
+Thank you
